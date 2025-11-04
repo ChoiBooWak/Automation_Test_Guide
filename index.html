@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동화 테스트 가이드 2025 - Python & Selenium</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 자동화 테스트 가이드 2025</h1>
+            <p class="subtitle">Python과 Selenium으로 시작하는 웹 자동화 테스트</p>
+            <button id="theme-toggle" class="theme-toggle" aria-label="다크모드 전환">🌙</button>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="intro">소개</button>
+            <button class="tab-btn" data-tab="setup">설치 및 설정</button>
+            <button class="tab-btn" data-tab="basics">기초 개념</button>
+            <button class="tab-btn" data-tab="locators">요소 찾기</button>
+            <button class="tab-btn" data-tab="examples">실전 예제</button>
+            <button class="tab-btn" data-tab="selenium-advanced">Selenium 전문가</button>
+            <button class="tab-btn" data-tab="pytest-basics">Pytest 기초</button>
+            <button class="tab-btn" data-tab="pytest-advanced">Pytest 전문가</button>
+            <button class="tab-btn" data-tab="tips">팁 & 트러블슈팅</button>
+        </nav>
+
+        <main>
+            <!-- 소개 탭 -->
+            <section id="intro" class="tab-content active">
+                <h2>📚 자동화 테스트란?</h2>
+                <div class="content-box">
+                    <p>자동화 테스트는 사람이 반복적으로 수행해야 하는 작업을 프로그램으로 자동으로 수행하게 만드는 것입니다.</p>
+                    
+                    <h3>왜 자동화 테스트가 필요할까요?</h3>
+                    <ul>
+                        <li>✅ <strong>시간 절약:</strong> 반복 작업을 자동으로 처리하여 시간을 절약할 수 있습니다.</li>
+                        <li>✅ <strong>정확성:</strong> 사람의 실수를 줄이고 일관된 테스트를 수행합니다.</li>
+                        <li>✅ <strong>효율성:</strong> 여러 브라우저와 환경에서 동시에 테스트할 수 있습니다.</li>
+                        <li>✅ <strong>회귀 테스트:</strong> 새로운 기능 추가 후 기존 기능이 잘 작동하는지 자동으로 확인합니다.</li>
+                    </ul>
+
+                    <h3>Python과 Selenium이란?</h3>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>🐍 Python</h4>
+                            <p>배우기 쉬운 프로그래밍 언어로, 자동화 작업에 매우 적합합니다. 읽기 쉬운 문법과 풍부한 라이브러리를 제공합니다.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>🌐 Selenium</h4>
+                            <p>웹 브라우저를 자동으로 제어할 수 있게 해주는 도구입니다. 클릭, 입력, 페이지 이동 등 웹에서 할 수 있는 모든 작업을 자동화할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 설치 및 설정 탭 -->
+            <section id="setup" class="tab-content">
+                <h2>⚙️ 설치 및 설정</h2>
+                <div class="content-box">
+                    <h3>1단계: Python 설치</h3>
+                    <p>Python 3.8 이상 버전이 필요합니다. <a href="https://www.python.org/downloads/" target="_blank">Python 공식 웹사이트</a>에서 최신 버전을 다운로드하세요.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>터미널/명령 프롬프트에서 확인</span>
+                            <button class="copy-btn" data-code="python-version">복사</button>
+                        </div>
+                        <pre><code id="python-version">python --version
+# 또는
+python3 --version</code></pre>
+                    </div>
+
+                    <h3>2단계: Selenium 설치</h3>
+                    <p>Python의 패키지 관리자인 pip를 사용하여 Selenium을 설치합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>터미널/명령 프롬프트에서 실행</span>
+                            <button class="copy-btn" data-code="install-selenium">복사</button>
+                        </div>
+                        <pre><code id="install-selenium">pip install selenium
+# 또는
+pip3 install selenium</code></pre>
+                    </div>
+
+                    <h3>3단계: 웹드라이버 설치</h3>
+                    <p>Selenium이 브라우저를 제어하려면 웹드라이버가 필요합니다. Selenium 4.x 버전부터는 자동으로 드라이버를 관리합니다!</p>
+                    
+                    <div class="info-box">
+                        <strong>💡 팁:</strong> Selenium 4.x는 웹드라이버를 자동으로 관리합니다. 별도 설치가 필요 없습니다!
+                    </div>
+
+                    <h3>4단계: 첫 번째 테스트 실행</h3>
+                    <p>설치가 완료되었는지 확인하기 위한 간단한 테스트입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>test_install.py</span>
+                            <button class="copy-btn" data-code="test-install">복사</button>
+                        </div>
+                        <pre><code id="test-install">from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+# Chrome 옵션 설정
+chrome_options = Options()
+chrome_options.add_argument('--headless')  # 백그라운드 실행 (선택사항)
+
+# Selenium 4.x 자동 드라이버 관리
+driver = webdriver.Chrome(options=chrome_options)
+
+# 구글 홈페이지 열기
+driver.get("https://www.google.com")
+
+# 페이지 제목 확인
+print(f"페이지 제목: {driver.title}")
+
+# 브라우저 닫기
+driver.quit()
+
+print("✅ 설치가 완료되었습니다!")</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 기초 개념 탭 -->
+            <section id="basics" class="tab-content">
+                <h2>📖 기초 개념</h2>
+                <div class="content-box">
+                    <h3>1. 기본 사용법</h3>
+                    <p>Selenium의 기본 사용 패턴을 알아봅시다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>기본 구조</span>
+                            <button class="copy-btn" data-code="basic-structure">복사</button>
+                        </div>
+                        <pre><code id="basic-structure">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# 1. 브라우저 열기
+driver = webdriver.Chrome()
+
+# 2. 웹페이지 열기
+driver.get("https://example.com")
+
+# 3. 요소 찾기 및 상호작용
+element = driver.find_element(By.ID, "element-id")
+element.click()
+
+# 4. 브라우저 닫기
+driver.quit()</code></pre>
+                    </div>
+
+                    <h3>2. 요소 찾기 (Locators)</h3>
+                    <p>웹페이지의 요소를 찾는 여러 가지 방법이 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>요소 찾기 방법</span>
+                            <button class="copy-btn" data-code="locators-basic">복사</button>
+                        </div>
+                        <pre><code id="locators-basic">from selenium.webdriver.common.by import By
+
+# ID로 찾기 (가장 빠름)
+element = driver.find_element(By.ID, "username")
+
+# 클래스명으로 찾기
+element = driver.find_element(By.CLASS_NAME, "button-primary")
+
+# 이름 속성으로 찾기
+element = driver.find_element(By.NAME, "email")
+
+# 태그명으로 찾기
+element = driver.find_element(By.TAG_NAME, "button")
+
+# CSS 선택자로 찾기 (유연함)
+element = driver.find_element(By.CSS_SELECTOR, "#login-form .submit-btn")
+
+# XPath로 찾기 (복잡한 경우)
+element = driver.find_element(By.XPATH, "//button[@type='submit']")
+
+# 링크 텍스트로 찾기
+element = driver.find_element(By.LINK_TEXT, "로그인")
+
+# 부분 링크 텍스트로 찾기
+element = driver.find_element(By.PARTIAL_LINK_TEXT, "로그인")</code></pre>
+                    </div>
+
+                    <h3>3. 주요 동작들</h3>
+                    <p>웹페이지에서 자주 사용하는 동작들을 알아봅시다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>주요 동작 예제</span>
+                            <button class="copy-btn" data-code="actions">복사</button>
+                        </div>
+                        <pre><code id="actions">from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+# 텍스트 입력
+input_field = driver.find_element(By.ID, "search")
+input_field.send_keys("자동화 테스트")
+input_field.clear()  # 입력 필드 지우기
+
+# 클릭
+button = driver.find_element(By.ID, "submit-btn")
+button.click()
+
+# 키보드 입력
+input_field.send_keys(Keys.ENTER)  # Enter 키
+input_field.send_keys(Keys.TAB)    # Tab 키
+input_field.send_keys(Keys.ESCAPE) # ESC 키
+
+# 텍스트 가져오기
+text = element.text
+print(f"요소의 텍스트: {text}")
+
+# 속성 가져오기
+value = element.get_attribute("href")
+print(f"링크 주소: {value}")
+
+# 페이지 이동
+driver.get("https://example.com")
+driver.back()    # 뒤로 가기
+driver.forward() # 앞으로 가기
+driver.refresh() # 새로고침
+
+# 현재 URL 가져오기
+current_url = driver.current_url
+print(f"현재 주소: {current_url}")
+
+# 페이지 제목 가져오기
+title = driver.title
+print(f"페이지 제목: {title}")</code></pre>
+                    </div>
+
+                    <h3>4. 대기 (Wait)</h3>
+                    <p>페이지가 로드될 때까지 기다리는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>대기 방법</span>
+                            <button class="copy-btn" data-code="wait">복사</button>
+                        </div>
+                        <pre><code id="wait">from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+import time
+
+# 1. 암시적 대기 (Implicit Wait) - 모든 요소에 적용
+driver.implicitly_wait(10)  # 최대 10초까지 대기
+
+# 2. 명시적 대기 (Explicit Wait) - 특정 조건까지 대기 (권장)
+wait = WebDriverWait(driver, 10)
+element = wait.until(EC.presence_of_element_located((By.ID, "my-element")))
+
+# 3. 시간 대기 (명시적 대기 사용 권장)
+time.sleep(2)  # 2초 대기 (가능한 피하기)
+
+# 자주 사용하는 대기 조건들
+wait.until(EC.element_to_be_clickable((By.ID, "button")))
+wait.until(EC.visibility_of_element_located((By.ID, "content")))
+wait.until(EC.text_to_be_present_in_element((By.ID, "status"), "완료"))</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 요소 찾기 탭 -->
+            <section id="locators" class="tab-content">
+                <h2>🔍 요소 찾기 완벽 가이드</h2>
+                <div class="content-box">
+                    <h3>HTML 구조 이해하기</h3>
+                    <p>웹 자동화를 하기 전에 HTML 구조를 이해하는 것이 중요합니다. HTML은 웹페이지의 뼈대를 만드는 마크업 언어입니다.</p>
+                    
+                    <h4>기본 HTML 구조</h4>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>HTML 기본 구조 예제</span>
+                            <button class="copy-btn" data-code="html-basic">복사</button>
+                        </div>
+                        <pre><code id="html-basic">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;페이지 제목&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="container" class="main-content"&gt;
+        &lt;h1&gt;제목&lt;/h1&gt;
+        &lt;form id="login-form" action="/login" method="post"&gt;
+            &lt;input type="text" id="username" name="username" placeholder="사용자명"&gt;
+            &lt;input type="password" id="password" name="password" placeholder="비밀번호"&gt;
+            &lt;button type="submit" class="btn btn-primary"&gt;로그인&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;a href="/signup" class="link"&gt;회원가입&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+
+                    <h4>HTML 요소의 주요 속성</h4>
+                    <ul>
+                        <li><strong>id:</strong> 요소의 고유 식별자 (한 페이지에 하나만 존재해야 함)</li>
+                        <li><strong>class:</strong> 요소의 클래스명 (여러 요소가 같은 클래스를 가질 수 있음)</li>
+                        <li><strong>name:</strong> 폼 요소의 이름 (주로 input, select, textarea에 사용)</li>
+                        <li><strong>type:</strong> 요소의 타입 (input의 경우: text, password, email, button 등)</li>
+                        <li><strong>href:</strong> 링크의 주소 (a 태그에서 사용)</li>
+                        <li><strong>value:</strong> 요소의 값</li>
+                        <li><strong>text:</strong> 요소 안에 표시되는 텍스트</li>
+                    </ul>
+
+                    <h4>실제 HTML 예제 분석</h4>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>실제 웹페이지 HTML 예제</span>
+                            <button class="copy-btn" data-code="html-example">복사</button>
+                        </div>
+                        <pre><code id="html-example">&lt;!-- 로그인 버튼 예제 --&gt;
+&lt;button id="login-btn" class="btn-primary" type="button" onclick="login()"&gt;
+    로그인
+&lt;/button&gt;
+&lt;!-- 이 버튼을 찾는 방법:
+     - ID: "login-btn"
+     - 클래스: "btn-primary"
+     - 타입: "button"
+     - 텍스트: "로그인"
+--&gt;
+
+&lt;!-- 검색 입력 필드 예제 --&gt;
+&lt;input type="text" 
+       id="search-input" 
+       name="q" 
+       class="search-field" 
+       placeholder="검색어를 입력하세요"
+       value=""&gt;
+&lt;!-- 이 입력 필드를 찾는 방법:
+     - ID: "search-input"
+     - Name: "q"
+     - 클래스: "search-field"
+     - 타입: "text"
+--&gt;
+
+&lt;!-- 링크 예제 --&gt;
+&lt;a href="https://example.com" 
+   id="home-link" 
+   class="nav-link" 
+   data-page="home"&gt;
+    홈으로 가기
+&lt;/a&gt;
+&lt;!-- 이 링크를 찾는 방법:
+     - ID: "home-link"
+     - 클래스: "nav-link"
+     - href: "https://example.com"
+     - 텍스트: "홈으로 가기"
+     - data 속성: data-page="home"
+--&gt;
+
+&lt;!-- 드롭다운 메뉴 예제 --&gt;
+&lt;select id="country" name="country" class="form-select"&gt;
+    &lt;option value="kr"&gt;한국&lt;/option&gt;
+    &lt;option value="us"&gt;미국&lt;/option&gt;
+    &lt;option value="jp" selected&gt;일본&lt;/option&gt;
+&lt;/select&gt;
+&lt;!-- 이 select를 찾는 방법:
+     - ID: "country"
+     - Name: "country"
+     - 클래스: "form-select"
+--&gt;</code></pre>
+                    </div>
+
+                    <h3>브라우저 개발자 도구 사용법</h3>
+                    <p>브라우저 개발자 도구를 사용하면 웹페이지의 HTML 구조를 쉽게 확인하고 요소를 찾을 수 있습니다.</p>
+                    
+                    <h4>1. 개발자 도구 열기</h4>
+                    <ul>
+                        <li><strong>Chrome/Edge:</strong> F12 키 또는 Ctrl+Shift+I (Windows) / Cmd+Option+I (Mac)</li>
+                        <li><strong>Firefox:</strong> F12 키 또는 Ctrl+Shift+I (Windows) / Cmd+Option+I (Mac)</li>
+                        <li><strong>우클릭:</strong> 페이지에서 우클릭 → "검사" 또는 "Inspect" 선택</li>
+                    </ul>
+
+                    <h4>2. Elements 탭에서 요소 찾기</h4>
+                    <div class="tip-card">
+                        <h4>📌 요소 검사 단계별 가이드</h4>
+                        <ol>
+                            <li><strong>개발자 도구 열기:</strong> F12 키를 누릅니다</li>
+                            <li><strong>요소 선택 도구:</strong> 왼쪽 상단의 화살표 아이콘(또는 Ctrl+Shift+C)을 클릭합니다</li>
+                            <li><strong>요소 클릭:</strong> 웹페이지에서 찾고 싶은 요소를 클릭합니다</li>
+                            <li><strong>HTML 확인:</strong> Elements 탭에서 해당 요소의 HTML이 강조 표시됩니다</li>
+                            <li><strong>속성 확인:</strong> 강조된 요소의 id, class, name 등의 속성을 확인합니다</li>
+                        </ol>
+                    </div>
+
+                    <h4>3. 요소의 속성 확인하기</h4>
+                    <p>개발자 도구에서 요소를 선택하면 다음과 같은 정보를 확인할 수 있습니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>개발자 도구에서 확인할 수 있는 정보</span>
+                            <button class="copy-btn" data-code="devtools-info">복사</button>
+                        </div>
+                        <pre><code id="devtools-info"># 예제: 로그인 버튼 요소
+&lt;button id="login-btn" class="btn btn-primary" type="submit"&gt;
+    로그인
+&lt;/button&gt;
+
+# 개발자 도구에서 확인:
+1. 태그명: button
+2. ID: login-btn
+3. 클래스: btn, btn-primary (두 개의 클래스)
+4. 타입: submit
+5. 텍스트: "로그인"
+
+# Selenium에서 찾는 방법:
+driver.find_element(By.ID, "login-btn")           # ID로 찾기
+driver.find_element(By.CLASS_NAME, "btn-primary") # 클래스로 찾기
+driver.find_element(By.CSS_SELECTOR, "button.btn-primary") # CSS 선택자
+driver.find_element(By.XPATH, "//button[text()='로그인']") # 텍스트로 찾기</code></pre>
+                    </div>
+
+                    <h4>4. Console 탭에서 요소 찾기 테스트</h4>
+                    <p>Console 탭에서 JavaScript를 사용하여 요소를 찾을 수 있습니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Console에서 요소 찾기 테스트</span>
+                            <button class="copy-btn" data-code="console-test">복사</button>
+                        </div>
+                        <pre><code id="console-test"># Console에서 실행할 수 있는 명령어들:
+
+# ID로 요소 찾기
+document.getElementById("username")
+
+# 클래스로 요소 찾기
+document.getElementsByClassName("btn-primary")
+
+# CSS 선택자로 요소 찾기
+document.querySelector("#login-form .submit-btn")
+document.querySelectorAll("button.btn")
+
+# XPath로 요소 찾기 (Chrome Console에서)
+$x("//button[@id='login-btn']")
+
+# 요소가 존재하는지 확인
+document.getElementById("username") !== null  # true면 존재함
+
+# 요소의 텍스트 확인
+document.getElementById("login-btn").textContent
+
+# 요소의 속성 확인
+document.getElementById("username").getAttribute("name")
+document.getElementById("username").getAttribute("type")</code></pre>
+                    </div>
+
+                    <h4>5. 실제 예제: 구글 검색창 찾기</h4>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>구글 검색창 요소 분석</span>
+                            <button class="copy-btn" data-code="google-example">복사</button>
+                        </div>
+                        <pre><code id="google-example"># 1. 구글 홈페이지(https://www.google.com)를 엽니다
+# 2. F12를 눌러 개발자 도구를 엽니다
+# 3. 요소 선택 도구로 검색창을 클릭합니다
+
+# 개발자 도구에서 보이는 HTML:
+&lt;input type="text" 
+       name="q" 
+       class="gLFyf" 
+       title="검색" 
+       value=""&gt;
+
+# 이 요소를 찾는 방법들:
+
+# 방법 1: Name 속성 (가장 안정적)
+driver.find_element(By.NAME, "q")
+
+# 방법 2: 클래스명 (변경될 수 있음)
+driver.find_element(By.CLASS_NAME, "gLFyf")
+
+# 방법 3: CSS 선택자
+driver.find_element(By.CSS_SELECTOR, "input[name='q']")
+driver.find_element(By.CSS_SELECTOR, "input.gLFyf")
+
+# 방법 4: XPath
+driver.find_element(By.XPATH, "//input[@name='q']")
+driver.find_element(By.XPATH, "//input[@title='검색']")
+
+# 추천: name="q"가 가장 안정적이므로 이것을 사용!</code></pre>
+                    </div>
+
+                    <h4>6. 요소 선택자 복사하기</h4>
+                    <p>개발자 도구에서 요소를 우클릭하면 선택자를 복사할 수 있습니다:</p>
+                    
+                    <div class="info-box">
+                        <strong>📋 선택자 복사 방법:</strong>
+                        <ol>
+                            <li>Elements 탭에서 요소를 우클릭</li>
+                            <li>"Copy" 메뉴 선택</li>
+                            <li>다음 중 하나 선택:
+                                <ul>
+                                    <li><strong>Copy selector:</strong> CSS 선택자 복사</li>
+                                    <li><strong>Copy XPath:</strong> XPath 복사</li>
+                                    <li><strong>Copy full XPath:</strong> 절대 경로 XPath 복사</li>
+                                    <li><strong>Copy JS path:</strong> JavaScript 경로 복사</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h4>7. 요소가 보이는지 확인하기</h4>
+                    <p>요소가 화면에 보이는지, 클릭 가능한지 확인하는 방법:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>요소 상태 확인</span>
+                            <button class="copy-btn" data-code="element-state">복사</button>
+                        </div>
+                        <pre><code id="element-state"># Console에서 확인하는 방법:
+
+# 요소가 보이는지 확인
+const element = document.getElementById("button");
+window.getComputedStyle(element).display !== "none"  # true면 보임
+element.offsetParent !== null  # true면 보임
+
+# 요소가 클릭 가능한지 확인
+!element.disabled  # true면 클릭 가능
+
+# 요소가 활성화되어 있는지
+!element.disabled && !element.readOnly
+
+# Selenium에서 확인:
+element.is_displayed()  # 요소가 보이는지
+element.is_enabled()    # 요소가 활성화되어 있는지
+element.is_selected()   # 요소가 선택되어 있는지 (checkbox, radio)</code></pre>
+                    </div>
+
+                    <h3>DOM 트리 구조 이해하기</h3>
+                    <p>HTML은 DOM(Document Object Model) 트리 구조로 표현됩니다. 이 구조를 이해하면 요소를 더 정확하게 찾을 수 있습니다.</p>
+                    
+                    <h4>1. DOM 트리 구조</h4>
+                    <p>HTML 문서는 계층적 트리 구조로 되어 있습니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>DOM 트리 구조 예제</span>
+                            <button class="copy-btn" data-code="dom-tree">복사</button>
+                        </div>
+                        <pre><code id="dom-tree"># HTML 구조:
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div id="container"&gt;
+      &lt;nav&gt;
+        &lt;button&gt;버튼1&lt;/button&gt;
+        &lt;button&gt;버튼2&lt;/button&gt;
+        &lt;button&gt;버튼3&lt;/button&gt;
+        &lt;button&gt;버튼4&lt;/button&gt;
+      &lt;/nav&gt;
+      &lt;main&gt;
+        &lt;section&gt;
+          &lt;h1&gt;제목&lt;/h1&gt;
+        &lt;/section&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+# DOM 트리 구조:
+html
+ └── body
+      └── div#container
+           ├── nav
+           │    ├── button[1]  (첫 번째 버튼)
+           │    ├── button[2]  (두 번째 버튼)
+           │    ├── button[3]  (세 번째 버튼)
+           │    └── button[4]  (네 번째 버튼)
+           └── main
+                └── section
+                     └── h1</code></pre>
+                    </div>
+
+                    <h4>2. 절대 경로 vs 상대 경로</h4>
+                    <p>XPath에서는 절대 경로와 상대 경로를 사용할 수 있습니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>절대 경로와 상대 경로</span>
+                            <button class="copy-btn" data-code="xpath-absolute-relative">복사</button>
+                        </div>
+                        <pre><code id="xpath-absolute-relative"># HTML 구조:
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;nav&gt;
+        &lt;button&gt;버튼1&lt;/button&gt;
+        &lt;button&gt;버튼2&lt;/button&gt;
+        &lt;button&gt;버튼3&lt;/button&gt;
+        &lt;button&gt;버튼4&lt;/button&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+# 절대 경로 (루트부터 시작, /로 시작)
+/html/body/div/nav/button[4]  # 네 번째 버튼
+/html/body/div/nav/button[1]  # 첫 번째 버튼
+
+# 상대 경로 (현재 위치 기준, //로 시작)
+//nav/button[4]               # nav 아래 네 번째 button
+//button[4]                   # 문서 전체에서 네 번째 button
+//nav//button[4]              # nav 아래 어디든 네 번째 button
+
+# Selenium에서 사용:
+driver.find_element(By.XPATH, "/html/body/div/nav/button[4]")
+driver.find_element(By.XPATH, "//nav/button[4]")</code></pre>
+                    </div>
+
+                    <h4>3. 인덱스를 사용한 요소 찾기</h4>
+                    <p>같은 태그의 여러 요소 중 특정 번째 요소를 찾을 때 인덱스를 사용합니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>인덱스로 요소 찾기</span>
+                            <button class="copy-btn" data-code="xpath-index">복사</button>
+                        </div>
+                        <pre><code id="xpath-index"># HTML 구조:
+&lt;nav&gt;
+  &lt;button class="tab-btn"&gt;소개&lt;/button&gt;
+  &lt;button class="tab-btn"&gt;설치&lt;/button&gt;
+  &lt;button class="tab-btn"&gt;기초&lt;/button&gt;
+  &lt;button class="tab-btn"&gt;예제&lt;/button&gt;
+&lt;/nav&gt;
+
+# XPath 인덱스 사용 (1부터 시작):
+//button[1]              # 첫 번째 button
+//button[2]              # 두 번째 button
+//button[4]              # 네 번째 button
+//nav/button[4]          # nav 아래 네 번째 button
+/html/body/div/nav/button[4]  # 절대 경로로 네 번째 button
+
+# CSS 선택자 인덱스 (0부터 시작, nth-child 사용):
+button:nth-child(1)     # 첫 번째 button
+button:nth-child(4)     # 네 번째 button
+nav button:nth-child(4) # nav 아래 네 번째 button
+
+# Selenium에서 사용:
+driver.find_element(By.XPATH, "//nav/button[4]")
+driver.find_element(By.XPATH, "/html/body/div/nav/button[4]")
+driver.find_element(By.CSS_SELECTOR, "nav button:nth-child(4)")
+
+# find_elements 사용 후 인덱스 접근:
+buttons = driver.find_elements(By.CSS_SELECTOR, "nav button")
+fourth_button = buttons[3]  # 인덱스는 0부터 시작 (0, 1, 2, 3)</code></pre>
+                    </div>
+
+                    <h4>4. 부모-자식 관계 이해하기</h4>
+                    <p>DOM에서 부모-자식 관계를 이해하면 정확한 경로를 만들 수 있습니다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>부모-자식 관계</span>
+                            <button class="copy-btn" data-code="parent-child">복사</button>
+                        </div>
+                        <pre><code id="parent-child"># HTML 구조:
+&lt;div id="container"&gt;              &lt;!-- 부모 --&gt;
+  &lt;nav class="tabs"&gt;              &lt;!-- 자식 (container의), 부모 (button들의) --&gt;
+    &lt;button id="btn1"&gt;버튼1&lt;/button&gt;  &lt;!-- 자식 (nav의) --&gt;
+    &lt;button id="btn2"&gt;버튼2&lt;/button&gt;  &lt;!-- 자식 (nav의) --&gt;
+    &lt;button id="btn3"&gt;버튼3&lt;/button&gt;  &lt;!-- 자식 (nav의) --&gt;
+    &lt;button id="btn4"&gt;버튼4&lt;/button&gt;  &lt;!-- 자식 (nav의) --&gt;
+  &lt;/nav&gt;
+&lt;/div&gt;
+
+# 직접 자식 찾기 (/) - 한 단계 아래만
+//div[@id='container']/nav          # container의 직접 자식 nav
+//nav/button[4]                     # nav의 직접 자식 네 번째 button
+
+# 모든 후손 찾기 (//) - 모든 단계 아래
+//div[@id='container']//button      # container 아래 모든 button (어디에 있든)
+//nav//button                       # nav 아래 모든 button
+
+# 부모 찾기
+//button[@id='btn4']/parent::nav    # btn4의 부모 nav
+//button[@id='btn4']/..             # btn4의 부모 (간단한 방법)
+
+# 조상 찾기
+//button[@id='btn4']/ancestor::div  # btn4의 조상 div
+//button[@id='btn4']/ancestor::div[@id='container']  # 특정 조상</code></pre>
+                    </div>
+
+                    <h4>5. 형제 노드 찾기</h4>
+                    <p>같은 부모를 가진 형제 요소들을 찾는 방법:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>형제 노드 찾기</span>
+                            <button class="copy-btn" data-code="sibling-nodes">복사</button>
+                        </div>
+                        <pre><code id="sibling-nodes"># HTML 구조:
+&lt;nav&gt;
+  &lt;button&gt;버튼1&lt;/button&gt;
+  &lt;button&gt;버튼2&lt;/button&gt;
+  &lt;button&gt;버튼3&lt;/button&gt;
+  &lt;button class="active"&gt;버튼4&lt;/button&gt;
+  &lt;button&gt;버튼5&lt;/button&gt;
+&lt;/nav&gt;
+
+# 다음 형제 요소 찾기
+//button[@class='active']/following-sibling::button[1]  # active 버튼 다음 첫 번째 형제
+//button[3]/following-sibling::button[1]                # 세 번째 버튼 다음 형제 (버튼4)
+
+# 이전 형제 요소 찾기
+//button[@class='active']/preceding-sibling::button[1]  # active 버튼 이전 형제
+//button[4]/preceding-sibling::button[1]                # 네 번째 버튼 이전 형제 (버튼3)
+
+# 모든 다음 형제 요소
+//button[2]/following-sibling::button                   # 두 번째 버튼의 모든 다음 형제
+
+# 모든 이전 형제 요소
+//button[4]/preceding-sibling::button                   # 네 번째 버튼의 모든 이전 형제
+
+# Selenium에서 사용:
+driver.find_element(By.XPATH, "//button[@class='active']/following-sibling::button[1]")</code></pre>
+                    </div>
+
+                    <h4>6. 실제 예제: /html/body/div/nav/button[4] 분석</h4>
+                    <p>제공하신 경로를 분석해봅시다:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>절대 경로 분석</span>
+                            <button class="copy-btn" data-code="path-analysis">복사</button>
+                        </div>
+                        <pre><code id="path-analysis"># 경로: /html/body/div/nav/button[4]
+
+# 경로 분석:
+/html              → html 태그 (루트)
+  /body            → body 태그 (html의 자식)
+    /div            → div 태그 (body의 자식, 첫 번째 div)
+      /nav          → nav 태그 (div의 자식)
+        /button[4]  → nav의 네 번째 button 요소
+
+# HTML 구조 예상:
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;nav&gt;
+        &lt;button&gt;1번&lt;/button&gt;
+        &lt;button&gt;2번&lt;/button&gt;
+        &lt;button&gt;3번&lt;/button&gt;
+        &lt;button&gt;4번&lt;/button&gt;  ← 이 요소를 찾음
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+# Selenium에서 사용:
+from selenium.webdriver.common.by import By
+
+# 절대 경로 사용
+element = driver.find_element(By.XPATH, "/html/body/div/nav/button[4]")
+
+# 더 안정적인 상대 경로 (권장)
+element = driver.find_element(By.XPATH, "//nav/button[4]")
+
+# 또는 더 구체적으로
+element = driver.find_element(By.XPATH, "//body//nav//button[4]")
+
+# CSS 선택자 사용 (권장)
+element = driver.find_element(By.CSS_SELECTOR, "nav button:nth-child(4)")
+
+# 인덱스로 접근
+buttons = driver.find_elements(By.CSS_SELECTOR, "nav button")
+element = buttons[3]  # 0부터 시작하므로 3번째 = 4번째 요소</code></pre>
+                    </div>
+
+                    <h4>7. DOM 노드 탐색 방법</h4>
+                    <p>JavaScript를 사용하여 DOM 노드를 탐색하는 방법:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>DOM 노드 탐색</span>
+                            <button class="copy-btn" data-code="dom-traversal">복사</button>
+                        </div>
+                        <pre><code id="dom-traversal"># Console에서 DOM 노드 탐색:
+
+# 부모 노드
+element.parentElement
+element.parentNode
+
+# 자식 노드들
+element.children              # 요소 자식들만 (Element)
+element.childNodes            # 모든 자식들 (텍스트, 주석 포함)
+element.firstElementChild     # 첫 번째 요소 자식
+element.lastElementChild      # 마지막 요소 자식
+
+# 형제 노드
+element.nextElementSibling    # 다음 형제 요소
+element.previousElementSibling # 이전 형제 요소
+element.nextSibling           # 다음 형제 (텍스트, 주석 포함)
+element.previousSibling       # 이전 형제 (텍스트, 주석 포함)
+
+# 예제:
+const nav = document.querySelector('nav');
+const fourthButton = nav.children[3];  # 네 번째 자식 (인덱스 0부터)
+const thirdButton = fourthButton.previousElementSibling;  # 이전 형제
+const fifthButton = fourthButton.nextElementSibling;      # 다음 형제
+
+# Selenium에서 JavaScript 실행:
+driver.execute_script("""
+    const nav = document.querySelector('nav');
+    return nav.children[3];  // 네 번째 버튼
+""")</code></pre>
+                    </div>
+
+                    <h4>8. 복잡한 경로 예제</h4>
+                    <p>실제 웹페이지에서 자주 사용하는 복잡한 경로 패턴:</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>복잡한 경로 패턴</span>
+                            <button class="copy-btn" data-code="complex-paths">복사</button>
+                        </div>
+                        <pre><code id="complex-paths"># HTML 구조:
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="header"&gt;
+        &lt;nav class="tabs"&gt;
+          &lt;button class="tab active"&gt;탭1&lt;/button&gt;
+          &lt;button class="tab"&gt;탭2&lt;/button&gt;
+          &lt;button class="tab"&gt;탭3&lt;/button&gt;
+          &lt;button class="tab"&gt;탭4&lt;/button&gt;
+        &lt;/nav&gt;
+      &lt;/div&gt;
+      &lt;main&gt;
+        &lt;section id="content"&gt;
+          &lt;div class="content-box"&gt;
+            &lt;button class="action-btn"&gt;액션&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+# 다양한 경로 방법:
+
+# 1. 절대 경로
+/html/body/div[1]/div[1]/nav/button[4]
+
+# 2. 상대 경로 (더 안정적)
+//nav/button[4]
+//nav[@class='tabs']/button[4]
+
+# 3. 클래스로 특정
+//nav[@class='tabs']//button[4]
+//div[@class='container']//nav//button[4]
+
+# 4. 활성 탭 다음 탭 찾기
+//button[@class='active']/following-sibling::button[1]
+
+# 5. 특정 div 내의 네 번째 버튼
+//div[@class='header']/nav/button[4]
+
+# 6. CSS 선택자 (더 간단하고 빠름)
+nav.tabs button:nth-child(4)
+.container .header nav button:nth-child(4)
+.header nav button:nth-of-type(4)
+
+# Selenium 코드:
+from selenium.webdriver.common.by import By
+
+# 방법 1: 절대 경로 (비추천 - 구조 변경 시 깨짐)
+element = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/nav/button[4]")
+
+# 방법 2: 상대 경로 (추천)
+element = driver.find_element(By.XPATH, "//nav[@class='tabs']/button[4]")
+
+# 방법 3: CSS 선택자 (가장 추천)
+element = driver.find_element(By.CSS_SELECTOR, "nav.tabs button:nth-child(4)")
+
+# 방법 4: find_elements 사용 (가장 유연함)
+nav = driver.find_element(By.CSS_SELECTOR, "nav.tabs")
+buttons = nav.find_elements(By.TAG_NAME, "button")
+fourth_button = buttons[3]  # 네 번째 버튼</code></pre>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>⚠️ 절대 경로 사용 시 주의사항</h4>
+                        <ul>
+                            <li><strong>절대 경로는 피하세요:</strong> HTML 구조가 조금만 바뀌어도 깨질 수 있습니다</li>
+                            <li><strong>상대 경로 권장:</strong> `//nav/button[4]` 같은 상대 경로가 더 안정적입니다</li>
+                            <li><strong>CSS 선택자 추천:</strong> CSS 선택자가 XPath보다 빠르고 읽기 쉽습니다</li>
+                            <li><strong>인덱스 주의:</strong> 요소 순서가 바뀌면 인덱스도 바뀝니다</li>
+                            <li><strong>가능하면 ID/Name 사용:</strong> 가장 안정적인 방법은 고유한 ID나 Name을 사용하는 것입니다</li>
+                        </ul>
+                    </div>
+
+                    <h3>요소 찾기 전략</h3>
+                    <p>요소를 찾는 방법은 여러 가지가 있습니다. 각 방법의 특징과 언제 사용해야 하는지 알아봅시다.</p>
+                    
+                    <div class="info-box">
+                        <strong>💡 우선순위:</strong> ID > Name > CSS Selector > XPath > 기타
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>✅ 요소 찾기 체크리스트</h4>
+                        <ol>
+                            <li><strong>ID가 있는가?</strong> → ID 사용 (가장 빠르고 안정적)</li>
+                            <li><strong>Name 속성이 있는가?</strong> → Name 사용 (폼 요소에 적합)</li>
+                            <li><strong>고유한 클래스가 있는가?</strong> → CSS 선택자 사용</li>
+                            <li><strong>다른 속성이 있는가?</strong> → data-*, aria-* 등 활용</li>
+                            <li><strong>텍스트로만 찾을 수 있는가?</strong> → XPath 또는 Link Text 사용</li>
+                            <li><strong>복잡한 관계인가?</strong> → XPath 사용 (부모-자식 관계)</li>
+                            <li><strong>인덱스가 필요한가?</strong> → find_elements 후 인덱스 접근 또는 nth-child 사용</li>
+                        </ol>
+                    </div>
+
+                    <h3>1. ID로 찾기 (가장 권장)</h3>
+                    <p>ID는 고유하고 안정적이므로 가장 빠르고 신뢰할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>ID로 찾기</span>
+                            <button class="copy-btn" data-code="locator-id">복사</button>
+                        </div>
+                        <pre><code id="locator-id">from selenium.webdriver.common.by import By
+
+# 단일 요소 찾기
+element = driver.find_element(By.ID, "username")
+element.click()
+
+# 여러 요소 찾기 (ID는 고유하므로 일반적으로 사용 안 함)
+# elements = driver.find_elements(By.ID, "username")  # 리스트 반환</code></pre>
+                    </div>
+
+                    <h3>2. Name 속성으로 찾기</h3>
+                    <p>폼 요소에 자주 사용되는 name 속성으로 찾습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Name으로 찾기</span>
+                            <button class="copy-btn" data-code="locator-name">복사</button>
+                        </div>
+                        <pre><code id="locator-name">from selenium.webdriver.common.by import By
+
+# name="email"인 요소 찾기
+email_field = driver.find_element(By.NAME, "email")
+email_field.send_keys("test@example.com")
+
+# 여러 요소 찾기
+all_inputs = driver.find_elements(By.NAME, "field_name")</code></pre>
+                    </div>
+
+                    <h3>3. CSS 선택자로 찾기 (강력함)</h3>
+                    <p>CSS 선택자는 매우 유연하고 강력합니다. 복잡한 조건도 표현할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>CSS 선택자 예제</span>
+                            <button class="copy-btn" data-code="locator-css">복사</button>
+                        </div>
+                        <pre><code id="locator-css">from selenium.webdriver.common.by import By
+
+# ID 선택자
+element = driver.find_element(By.CSS_SELECTOR, "#login-form")
+
+# 클래스 선택자
+button = driver.find_element(By.CSS_SELECTOR, ".submit-btn")
+
+# 하위 요소 선택
+submit_btn = driver.find_element(By.CSS_SELECTOR, "#login-form .submit-btn")
+
+# 속성 선택자
+element = driver.find_element(By.CSS_SELECTOR, "input[type='email']")
+element = driver.find_element(By.CSS_SELECTOR, "a[href*='login']")  # href에 'login' 포함
+
+# 복합 선택자
+element = driver.find_element(By.CSS_SELECTOR, "div.container > button.primary")
+
+# 여러 클래스
+element = driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary")
+
+# n번째 자식
+element = driver.find_element(By.CSS_SELECTOR, "ul li:nth-child(3)")
+
+# 첫 번째/마지막 자식
+element = driver.find_element(By.CSS_SELECTOR, "div:first-child")
+element = driver.find_element(By.CSS_SELECTOR, "div:last-child")</code></pre>
+                    </div>
+
+                    <h3>4. XPath로 찾기 (복잡한 경우)</h3>
+                    <p>XPath는 가장 강력하지만 느릴 수 있습니다. 다른 방법으로 찾을 수 없을 때만 사용하세요.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>XPath 예제</span>
+                            <button class="copy-btn" data-code="locator-xpath">복사</button>
+                        </div>
+                        <pre><code id="locator-xpath">from selenium.webdriver.common.by import By
+
+# 절대 경로 (권장하지 않음)
+element = driver.find_element(By.XPATH, "/html/body/div[1]/button")
+
+# 상대 경로
+element = driver.find_element(By.XPATH, "//button")
+
+# 속성으로 찾기
+element = driver.find_element(By.XPATH, "//input[@type='text']")
+element = driver.find_element(By.XPATH, "//button[@id='submit']")
+
+# 텍스트로 찾기
+element = driver.find_element(By.XPATH, "//button[text()='로그인']")
+element = driver.find_element(By.XPATH, "//a[contains(text(), '다운로드')]")
+
+# 여러 조건 조합
+element = driver.find_element(By.XPATH, "//input[@type='email' and @name='email']")
+element = driver.find_element(By.XPATH, "//div[@class='container' or @class='wrapper']")
+
+# 부모/자식 관계
+element = driver.find_element(By.XPATH, "//div[@id='parent']//button")
+element = driver.find_element(By.XPATH, "//button/parent::div")
+
+# 다음 형제 요소
+element = driver.find_element(By.XPATH, "//label[text()='이메일']/following-sibling::input")
+
+# 이전 형제 요소
+element = driver.find_element(By.XPATH, "//input[@name='email']/preceding-sibling::label")
+
+# n번째 요소
+element = driver.find_element(By.XPATH, "(//button)[3]")  # 세 번째 버튼
+
+# 복잡한 조건
+element = driver.find_element(By.XPATH, "//div[contains(@class, 'active') and @data-id='123']")</code></pre>
+                    </div>
+
+                    <h3>5. 클래스명으로 찾기</h3>
+                    <p>여러 요소에 같은 클래스가 있을 수 있으므로 주의가 필요합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>클래스명으로 찾기</span>
+                            <button class="copy-btn" data-code="locator-class">복사</button>
+                        </div>
+                        <pre><code id="locator-class">from selenium.webdriver.common.by import By
+
+# 단일 요소 (첫 번째 요소만 반환)
+button = driver.find_element(By.CLASS_NAME, "btn-primary")
+
+# 모든 요소 찾기
+all_buttons = driver.find_elements(By.CLASS_NAME, "btn-primary")
+
+# 여러 클래스가 있는 경우 (CSS 선택자 사용 권장)
+element = driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary")</code></pre>
+                    </div>
+
+                    <h3>6. 태그명으로 찾기</h3>
+                    <p>HTML 태그 이름으로 찾습니다. 일반적으로 여러 요소가 반환됩니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>태그명으로 찾기</span>
+                            <button class="copy-btn" data-code="locator-tag">복사</button>
+                        </div>
+                        <pre><code id="locator-tag">from selenium.webdriver.common.by import By
+
+# 모든 링크 찾기
+links = driver.find_elements(By.TAG_NAME, "a")
+
+# 모든 버튼 찾기
+buttons = driver.find_elements(By.TAG_NAME, "button")
+
+# 모든 입력 필드 찾기
+inputs = driver.find_elements(By.TAG_NAME, "input")
+
+# 첫 번째 요소만
+first_link = driver.find_element(By.TAG_NAME, "a")</code></pre>
+                    </div>
+
+                    <h3>7. 링크 텍스트로 찾기</h3>
+                    <p>&lt;a&gt; 태그의 정확한 텍스트나 부분 텍스트로 찾습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>링크 텍스트로 찾기</span>
+                            <button class="copy-btn" data-code="locator-link">복사</button>
+                        </div>
+                        <pre><code id="locator-link">from selenium.webdriver.common.by import By
+
+# 정확한 텍스트로 찾기
+link = driver.find_element(By.LINK_TEXT, "회원가입")
+
+# 부분 텍스트로 찾기 (더 유연함)
+link = driver.find_element(By.PARTIAL_LINK_TEXT, "가입")
+
+# 여러 링크 찾기
+all_links = driver.find_elements(By.PARTIAL_LINK_TEXT, "다운로드")</code></pre>
+                    </div>
+
+                    <h3>8. 상대적 요소 찾기</h3>
+                    <p>이미 찾은 요소를 기준으로 상대적으로 다른 요소를 찾을 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>상대적 요소 찾기</span>
+                            <button class="copy-btn" data-code="locator-relative">복사</button>
+                        </div>
+                        <pre><code id="locator-relative">from selenium.webdriver.common.by import By
+
+# 기준 요소 찾기
+parent_div = driver.find_element(By.ID, "container")
+
+# 기준 요소 내에서 하위 요소 찾기
+child_button = parent_div.find_element(By.TAG_NAME, "button")
+child_inputs = parent_div.find_elements(By.TAG_NAME, "input")
+
+# 예제: 테이블 내의 특정 셀 찾기
+table = driver.find_element(By.ID, "data-table")
+first_row = table.find_element(By.TAG_NAME, "tr")
+cells = first_row.find_elements(By.TAG_NAME, "td")
+print(f"첫 번째 셀: {cells[0].text}")
+
+# 예제: 폼 내의 모든 입력 필드 찾기
+form = driver.find_element(By.ID, "login-form")
+inputs = form.find_elements(By.TAG_NAME, "input")
+for input_field in inputs:
+    print(f"입력 필드: {input_field.get_attribute('name')}")</code></pre>
+                    </div>
+
+                    <h3>9. 요소가 존재하는지 확인하기</h3>
+                    <p>요소가 없을 때 예외를 처리하는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>요소 존재 확인</span>
+                            <button class="copy-btn" data-code="locator-exists">복사</button>
+                        </div>
+                        <pre><code id="locator-exists">from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+
+# 방법 1: try-except 사용
+try:
+    element = driver.find_element(By.ID, "my-element")
+    element.click()
+    print("요소를 찾았습니다!")
+except NoSuchElementException:
+    print("요소를 찾을 수 없습니다.")
+
+# 방법 2: find_elements 사용 (예외 없음)
+elements = driver.find_elements(By.ID, "my-element")
+if elements:
+    elements[0].click()
+    print("요소를 찾았습니다!")
+else:
+    print("요소를 찾을 수 없습니다.")
+
+# 방법 3: 명시적 대기 사용 (권장)
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+try:
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "my-element"))
+    )
+    element.click()
+except:
+    print("요소를 찾을 수 없습니다.")</code></pre>
+                    </div>
+
+                    <h3>10. 요소 찾기 최적화 팁</h3>
+                    <ul>
+                        <li><strong>ID 사용:</strong> 가능하면 항상 ID를 사용하세요. 가장 빠르고 안정적입니다.</li>
+                        <li><strong>CSS 선택자 > XPath:</strong> CSS 선택자가 XPath보다 빠릅니다.</li>
+                        <li><strong>명시적 대기:</strong> 동적 콘텐츠의 경우 WebDriverWait를 사용하세요.</li>
+                        <li><strong>find_elements 사용:</strong> 요소가 없을 수 있는 경우 find_elements를 사용하세요.</li>
+                        <li><strong>상대적 검색:</strong> 큰 범위에서 찾기보다는 작은 범위에서 찾는 것이 빠릅니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 실전 예제 탭 -->
+            <section id="examples" class="tab-content">
+                <h2>💻 실전 예제</h2>
+                <div class="content-box">
+                    <h3>예제 1: 구글 검색 자동화</h3>
+                    <p>구글에서 검색어를 입력하고 결과를 확인하는 간단한 예제입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>google_search.py</span>
+                            <button class="copy-btn" data-code="example1">복사</button>
+                        </div>
+                        <pre><code id="example1">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# 브라우저 열기
+driver = webdriver.Chrome()
+
+try:
+    # 구글 홈페이지 열기
+    driver.get("https://www.google.com")
+    
+    # 검색창 찾기 (구글의 검색창은 name 속성이 'q')
+    search_box = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, "q"))
+    )
+    
+    # 검색어 입력
+    search_box.send_keys("Python Selenium 자동화")
+    
+    # Enter 키 누르기
+    search_box.send_keys(Keys.RETURN)
+    
+    # 검색 결과 페이지 로드 대기
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "search"))
+    )
+    
+    # 검색 결과 제목 가져오기
+    results = driver.find_elements(By.CSS_SELECTOR, "h3")
+    print(f"\n검색 결과 {len(results)}개를 찾았습니다:\n")
+    
+    for i, result in enumerate(results[:5], 1):
+        print(f"{i}. {result.text}")
+    
+finally:
+    # 브라우저 닫기
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>예제 2: 로그인 폼 자동화</h3>
+                    <p>웹사이트 로그인 폼을 자동으로 채우고 제출하는 예제입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>login_form.py</span>
+                            <button class="copy-btn" data-code="example2">복사</button>
+                        </div>
+                        <pre><code id="example2">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+driver = webdriver.Chrome()
+
+try:
+    # 로그인 페이지 열기 (예시)
+    driver.get("https://example.com/login")
+    
+    # 사용자명 입력 필드 찾기
+    username_field = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "username"))
+    )
+    username_field.clear()
+    username_field.send_keys("your_username")
+    
+    # 비밀번호 입력 필드 찾기
+    password_field = driver.find_element(By.ID, "password")
+    password_field.clear()
+    password_field.send_keys("your_password")
+    
+    # 로그인 버튼 클릭
+    login_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+    login_button.click()
+    
+    # 로그인 성공 확인 (예: 대시보드 페이지로 이동했는지 확인)
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("dashboard")  # URL에 "dashboard"가 포함되는지 확인
+    )
+    
+    print("✅ 로그인 성공!")
+    
+except Exception as e:
+    print(f"❌ 오류 발생: {e}")
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>예제 3: 여러 페이지 크롤링</h3>
+                    <p>여러 페이지에서 데이터를 수집하는 예제입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>crawl_pages.py</span>
+                            <button class="copy-btn" data-code="example3">복사</button>
+                        </div>
+                        <pre><code id="example3">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+driver = webdriver.Chrome()
+
+try:
+    # 첫 페이지 열기
+    driver.get("https://example.com/products")
+    
+    all_products = []
+    
+    # 여러 페이지를 순회
+    for page in range(1, 4):  # 1페이지부터 3페이지까지
+        print(f"\n📄 {page}페이지 처리 중...")
+        
+        # 상품 목록 찾기
+        products = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "product-item"))
+        )
+        
+        # 각 상품 정보 추출
+        for product in products:
+            try:
+                name = product.find_element(By.CLASS_NAME, "product-name").text
+                price = product.find_element(By.CLASS_NAME, "product-price").text
+                
+                all_products.append({
+                    "name": name,
+                    "price": price,
+                    "page": page
+                })
+                
+                print(f"  - {name}: {price}")
+            except:
+                continue
+        
+        # 다음 페이지로 이동 (다음 버튼 클릭)
+        try:
+            next_button = driver.find_element(By.CSS_SELECTOR, ".pagination .next")
+            if next_button.is_enabled():
+                next_button.click()
+                time.sleep(2)  # 페이지 로드 대기
+            else:
+                break  # 다음 페이지가 없으면 종료
+        except:
+            break
+    
+    print(f"\n✅ 총 {len(all_products)}개의 상품을 수집했습니다!")
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>예제 4: 파일 다운로드 자동화</h3>
+                    <p>웹사이트에서 파일을 자동으로 다운로드하는 예제입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>download_file.py</span>
+                            <button class="copy-btn" data-code="example4">복사</button>
+                        </div>
+                        <pre><code id="example4">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+import os
+
+# 다운로드 폴더 설정
+download_path = os.path.join(os.getcwd(), "downloads")
+
+# Chrome 옵션 설정
+chrome_options = Options()
+prefs = {
+    "download.default_directory": download_path,
+    "download.prompt_for_download": False,
+    "download.directory_upgrade": True,
+    "safebrowsing.enabled": True
+}
+chrome_options.add_experimental_option("prefs", prefs)
+
+driver = webdriver.Chrome(options=chrome_options)
+
+try:
+    # 다운로드 페이지 열기
+    driver.get("https://example.com/downloads")
+    
+    # 다운로드 링크 찾기 및 클릭
+    download_link = driver.find_element(By.LINK_TEXT, "다운로드")
+    download_link.click()
+    
+    print("✅ 다운로드 시작!")
+    
+    # 다운로드 완료 대기 (실제로는 파일이 완전히 다운로드될 때까지 기다려야 함)
+    import time
+    time.sleep(5)
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>예제 5: 스크린샷 찍기</h3>
+                    <p>웹페이지의 스크린샷을 자동으로 찍는 예제입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>screenshot.py</span>
+                            <button class="copy-btn" data-code="example5">복사</button>
+                        </div>
+                        <pre><code id="example5">from selenium import webdriver
+from selenium.webdriver.common.by import By
+import os
+
+driver = webdriver.Chrome()
+
+try:
+    # 웹페이지 열기
+    driver.get("https://www.google.com")
+    
+    # 전체 페이지 스크린샷
+    screenshot_path = "screenshot_full.png"
+    driver.save_screenshot(screenshot_path)
+    print(f"✅ 전체 페이지 스크린샷 저장: {screenshot_path}")
+    
+    # 특정 요소만 스크린샷
+    search_box = driver.find_element(By.NAME, "q")
+    element_screenshot = "screenshot_element.png"
+    search_box.screenshot(element_screenshot)
+    print(f"✅ 요소 스크린샷 저장: {element_screenshot}")
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selenium 전문가 탭 -->
+            <section id="selenium-advanced" class="tab-content">
+                <h2>🚀 Selenium 전문가 과정</h2>
+                <div class="content-box">
+                    <h3>고급 기법과 패턴</h3>
+                    <p>전문가 수준의 Selenium 기법을 배워봅시다.</p>
+
+                    <h3>1. Actions 클래스 - 고급 상호작용</h3>
+                    <p>마우스 호버, 드래그 앤 드롭, 키보드 조합 등 복잡한 동작을 수행합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Actions 클래스 사용</span>
+                            <button class="copy-btn" data-code="advanced-actions">복사</button>
+                        </div>
+                        <pre><code id="advanced-actions">from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # Actions 객체 생성
+    actions = ActionChains(driver)
+    
+    # 요소 찾기
+    element = driver.find_element(By.ID, "menu")
+    submenu = driver.find_element(By.ID, "submenu")
+    
+    # 마우스 호버
+    actions.move_to_element(element).perform()
+    
+    # 클릭 앤 홀드
+    actions.click_and_hold(element).perform()
+    
+    # 드래그 앤 드롭
+    source = driver.find_element(By.ID, "source")
+    target = driver.find_element(By.ID, "target")
+    actions.drag_and_drop(source, target).perform()
+    
+    # 키보드 조합 (Ctrl+A, Ctrl+C 등)
+    actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).perform()
+    actions.key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+    
+    # 더블 클릭
+    actions.double_click(element).perform()
+    
+    # 우클릭 (컨텍스트 메뉴)
+    actions.context_click(element).perform()
+    
+    # 여러 동작 체이닝
+    actions.move_to_element(element).click().send_keys("text").perform()
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>2. JavaScript 실행</h3>
+                    <p>Selenium으로 할 수 없는 작업을 JavaScript로 수행할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>JavaScript 실행</span>
+                            <button class="copy-btn" data-code="advanced-js">복사</button>
+                        </div>
+                        <pre><code id="advanced-js">from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # JavaScript 코드 실행
+    driver.execute_script("console.log('Hello from Selenium!');")
+    
+    # JavaScript로 요소 클릭
+    element = driver.find_element(By.ID, "button")
+    driver.execute_script("arguments[0].click();", element)
+    
+    # JavaScript로 스크롤
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    
+    # 특정 요소까지 스크롤
+    element = driver.find_element(By.ID, "footer")
+    driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    
+    # JavaScript로 값 가져오기
+    title = driver.execute_script("return document.title;")
+    url = driver.execute_script("return window.location.href;")
+    
+    # JavaScript로 요소 속성 변경
+    driver.execute_script("arguments[0].style.display = 'none';", element)
+    driver.execute_script("arguments[0].style.border = '2px solid red';", element)
+    
+    # JavaScript로 값 설정
+    driver.execute_script("arguments[0].value = 'new value';", element)
+    
+    # 비동기 JavaScript 실행 및 결과 대기
+    result = driver.execute_async_script("""
+        var callback = arguments[arguments.length - 1];
+        setTimeout(function() {
+            callback('완료!');
+        }, 1000);
+    """)
+    print(f"결과: {result}")
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>3. 페이지 객체 모델 (Page Object Model, POM)</h3>
+                    <p>유지보수가 쉬운 코드를 작성하기 위한 디자인 패턴입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>페이지 객체 모델 구현</span>
+                            <button class="copy-btn" data-code="advanced-pom">복사</button>
+                        </div>
+                        <pre><code id="advanced-pom">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# 페이지 객체 클래스
+class LoginPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+        
+        # 요소 위치 정의
+        self.username_field = (By.ID, "username")
+        self.password_field = (By.ID, "password")
+        self.login_button = (By.CSS_SELECTOR, "button[type='submit']")
+        self.error_message = (By.CLASS_NAME, "error")
+    
+    def open(self, url):
+        """페이지 열기"""
+        self.driver.get(url)
+        return self
+    
+    def enter_username(self, username):
+        """사용자명 입력"""
+        field = self.wait.until(EC.presence_of_element_located(self.username_field))
+        field.clear()
+        field.send_keys(username)
+        return self
+    
+    def enter_password(self, password):
+        """비밀번호 입력"""
+        field = self.driver.find_element(*self.password_field)
+        field.clear()
+        field.send_keys(password)
+        return self
+    
+    def click_login(self):
+        """로그인 버튼 클릭"""
+        button = self.wait.until(EC.element_to_be_clickable(self.login_button))
+        button.click()
+        return self
+    
+    def get_error_message(self):
+        """에러 메시지 가져오기"""
+        try:
+            error = self.driver.find_element(*self.error_message)
+            return error.text
+        except:
+            return None
+    
+    def login(self, username, password):
+        """로그인 전체 프로세스"""
+        self.enter_username(username)
+        self.enter_password(password)
+        self.click_login()
+        return self
+
+# 사용 예제
+driver = webdriver.Chrome()
+
+try:
+    login_page = LoginPage(driver)
+    login_page.open("https://example.com/login")
+    login_page.login("user123", "password123")
+    
+    # 체이닝 방식으로도 사용 가능
+    login_page.open("https://example.com/login") \
+              .enter_username("user123") \
+              .enter_password("password123") \
+              .click_login()
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>4. 멀티 윈도우 및 탭 처리</h3>
+                    <p>여러 브라우저 창이나 탭을 관리하는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>윈도우/탭 관리</span>
+                            <button class="copy-btn" data-code="advanced-windows">복사</button>
+                        </div>
+                        <pre><code id="advanced-windows">from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # 현재 윈도우 핸들 저장
+    main_window = driver.current_window_handle
+    print(f"메인 윈도우: {main_window}")
+    
+    # 새 탭 열기
+    driver.execute_script("window.open('https://google.com', '_blank');")
+    
+    # 모든 윈도우 핸들 가져오기
+    all_windows = driver.window_handles
+    print(f"모든 윈도우: {all_windows}")
+    
+    # 새 탭으로 전환
+    for window in all_windows:
+        if window != main_window:
+            driver.switch_to.window(window)
+            print(f"새 탭 제목: {driver.title}")
+            break
+    
+    # 메인 윈도우로 돌아가기
+    driver.switch_to.window(main_window)
+    
+    # 새 윈도우 열기
+    driver.execute_script("window.open('https://github.com', '_blank');")
+    
+    # 특정 윈도우로 전환
+    for window in driver.window_handles:
+        driver.switch_to.window(window)
+        if "GitHub" in driver.title:
+            print(f"GitHub 윈도우로 전환: {driver.title}")
+            break
+    
+    # 윈도우 닫기
+    driver.close()  # 현재 윈도우만 닫기
+    
+    # 메인 윈도우로 돌아가기
+    driver.switch_to.window(main_window)
+    
+finally:
+    driver.quit()  # 모든 윈도우 닫기</code></pre>
+                    </div>
+
+                    <h3>5. iframe 처리</h3>
+                    <p>페이지 내의 iframe을 다루는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>iframe 처리</span>
+                            <button class="copy-btn" data-code="advanced-iframe">복사</button>
+                        </div>
+                        <pre><code id="advanced-iframe">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # iframe 찾기
+    iframe = driver.find_element(By.ID, "my-iframe")
+    
+    # iframe으로 전환
+    driver.switch_to.frame(iframe)
+    
+    # iframe 내의 요소 작업
+    element = driver.find_element(By.ID, "element-in-iframe")
+    element.click()
+    
+    # 메인 페이지로 돌아가기
+    driver.switch_to.default_content()
+    
+    # 여러 iframe 처리
+    outer_iframe = driver.find_element(By.ID, "outer-iframe")
+    driver.switch_to.frame(outer_iframe)
+    
+    inner_iframe = driver.find_element(By.ID, "inner-iframe")
+    driver.switch_to.frame(inner_iframe)
+    
+    # 작업 수행...
+    
+    # 한 단계씩 돌아가기
+    driver.switch_to.parent_frame()  # inner에서 outer로
+    driver.switch_to.parent_frame()  # outer에서 메인으로
+    
+    # 또는 바로 메인으로
+    driver.switch_to.default_content()
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>6. 쿠키 및 세션 관리</h3>
+                    <p>쿠키를 추가, 삭제, 조회하는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>쿠키 관리</span>
+                            <button class="copy-btn" data-code="advanced-cookies">복사</button>
+                        </div>
+                        <pre><code id="advanced-cookies">from selenium import webdriver
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # 쿠키 추가
+    driver.add_cookie({
+        "name": "session_id",
+        "value": "abc123",
+        "domain": "example.com"
+    })
+    
+    # 쿠키 추가 (옵션 포함)
+    driver.add_cookie({
+        "name": "preferences",
+        "value": "dark_mode",
+        "domain": "example.com",
+        "path": "/",
+        "expiry": 1735689600,  # Unix 타임스탬프
+        "secure": True,
+        "httpOnly": False,
+        "sameSite": "Strict"
+    })
+    
+    # 모든 쿠키 가져오기
+    cookies = driver.get_cookies()
+    for cookie in cookies:
+        print(f"{cookie['name']}: {cookie['value']}")
+    
+    # 특정 쿠키 가져오기
+    session_cookie = driver.get_cookie("session_id")
+    print(f"세션 쿠키: {session_cookie}")
+    
+    # 쿠키 삭제
+    driver.delete_cookie("session_id")
+    
+    # 모든 쿠키 삭제
+    driver.delete_all_cookies()
+    
+    # 페이지 새로고침하여 쿠키 적용
+    driver.refresh()
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>7. 대기 전략 고급 기법</h3>
+                    <p>명시적 대기를 더 효과적으로 사용하는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>고급 대기 전략</span>
+                            <button class="copy-btn" data-code="advanced-wait">복사</button>
+                        </div>
+                        <pre><code id="advanced-wait">from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://example.com")
+    
+    # 커스텀 대기 조건 만들기
+    class element_has_text:
+        def __init__(self, locator, text):
+            self.locator = locator
+            self.text = text
+        
+        def __call__(self, driver):
+            element = driver.find_element(*self.locator)
+            if self.text in element.text:
+                return element
+            return False
+    
+    # 커스텀 대기 사용
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(element_has_text((By.ID, "status"), "완료"))
+    
+    # 여러 조건 중 하나라도 만족할 때까지 대기
+    from selenium.webdriver.support.wait import WebDriverWait
+    
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(
+        lambda driver: driver.find_element(By.ID, "element1") or 
+                      driver.find_element(By.ID, "element2")
+    )
+    
+    # 타임아웃 예외 처리
+    try:
+        element = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "slow-element"))
+        )
+    except TimeoutException:
+        print("요소를 찾을 수 없습니다. 타임아웃!")
+    
+    # 폴링 간격 조정 (기본 0.5초)
+    wait = WebDriverWait(driver, timeout=10, poll_frequency=1)
+    element = wait.until(EC.presence_of_element_located((By.ID, "element")))
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+
+                    <h3>8. 스크린샷 및 로그 고급 활용</h3>
+                    <p>테스트 실패 시 자동으로 스크린샷을 저장하고 로그를 남기는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>스크린샷 및 로그</span>
+                            <button class="copy-btn" data-code="advanced-screenshot">복사</button>
+                        </div>
+                        <pre><code id="advanced-screenshot">from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+import os
+
+# 로그 폴더 생성
+screenshot_dir = "screenshots"
+os.makedirs(screenshot_dir, exist_ok=True)
+
+# Chrome 옵션 설정 (로그 활성화)
+chrome_options = Options()
+chrome_options.add_argument('--enable-logging')
+chrome_options.add_argument('--log-level=0')
+
+driver = webdriver.Chrome(options=chrome_options)
+
+try:
+    driver.get("https://example.com")
+    
+    # 전체 페이지 스크린샷
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    screenshot_path = os.path.join(screenshot_dir, f"screenshot_{timestamp}.png")
+    driver.save_screenshot(screenshot_path)
+    
+    # 요소 스크린샷
+    element = driver.find_element(By.ID, "element")
+    element_screenshot = os.path.join(screenshot_dir, f"element_{timestamp}.png")
+    element.screenshot(element_screenshot)
+    
+    # 전체 페이지 높이만큼 스크린샷 (스크롤)
+    total_height = driver.execute_script("return document.body.scrollHeight")
+    viewport_height = driver.execute_script("return window.innerHeight")
+    
+    for i in range(0, total_height, viewport_height):
+        driver.execute_script(f"window.scrollTo(0, {i});")
+        driver.save_screenshot(f"{screenshot_dir}/scroll_{i}.png")
+    
+    # 브라우저 로그 가져오기
+    logs = driver.get_log('browser')
+    for log in logs:
+        print(f"로그 레벨: {log['level']}, 메시지: {log['message']}")
+    
+finally:
+    driver.quit()</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pytest 기초 탭 -->
+            <section id="pytest-basics" class="tab-content">
+                <h2>🧪 Pytest 기초</h2>
+                <div class="content-box">
+                    <h3>Pytest란?</h3>
+                    <p>Pytest는 Python의 강력한 테스트 프레임워크입니다. Selenium 테스트를 더 체계적으로 작성하고 실행할 수 있게 해줍니다.</p>
+                    
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>✨ 주요 장점</h4>
+                            <ul>
+                                <li>간단하고 직관적인 문법</li>
+                                <li>자동 테스트 발견</li>
+                                <li>상세한 실패 보고</li>
+                                <li>플러그인 생태계</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h4>📦 설치</h4>
+                            <p>pip를 사용하여 설치합니다.</p>
+                            <code>pip install pytest pytest-html</code>
+                        </div>
+                    </div>
+
+                    <h3>1. Pytest 설치</h3>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Pytest 설치</span>
+                            <button class="copy-btn" data-code="pytest-install">복사</button>
+                        </div>
+                        <pre><code id="pytest-install"># Pytest 설치
+pip install pytest
+
+# HTML 리포트 생성 플러그인
+pip install pytest-html
+
+# Selenium과 함께 사용할 플러그인
+pip install pytest-selenium
+
+# 병렬 실행 플러그인
+pip install pytest-xdist
+
+# 설치 확인
+pytest --version</code></pre>
+                    </div>
+
+                    <h3>2. 첫 번째 테스트 작성</h3>
+                    <p>기본적인 Pytest 테스트 구조를 알아봅시다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>test_basic.py</span>
+                            <button class="copy-btn" data-code="pytest-basic-test">복사</button>
+                        </div>
+                        <pre><code id="pytest-basic-test">import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+def test_google_search():
+    """구글 검색 테스트"""
+    driver = webdriver.Chrome()
+    
+    try:
+        driver.get("https://www.google.com")
+        assert "Google" in driver.title
+        
+        search_box = driver.find_element(By.NAME, "q")
+        search_box.send_keys("Python")
+        search_box.submit()
+        
+        # 검색 결과가 나타났는지 확인
+        assert "Python" in driver.title or "Python" in driver.page_source
+        
+    finally:
+        driver.quit()
+
+def test_element_exists():
+    """요소 존재 여부 테스트"""
+    driver = webdriver.Chrome()
+    
+    try:
+        driver.get("https://www.google.com")
+        
+        # 요소가 존재하는지 확인
+        logo = driver.find_element(By.ID, "logo")
+        assert logo.is_displayed()
+        
+    finally:
+        driver.quit()</code></pre>
+                    </div>
+
+                    <h3>3. Fixture 사용 - 브라우저 재사용</h3>
+                    <p>Fixture를 사용하여 테스트 간에 브라우저를 재사용할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>conftest.py - Fixture 정의</span>
+                            <button class="copy-btn" data-code="pytest-fixture">복사</button>
+                        </div>
+                        <pre><code id="pytest-fixture">import pytest
+from selenium import webdriver
+
+@pytest.fixture
+def driver():
+    """브라우저 드라이버 Fixture"""
+    driver = webdriver.Chrome()
+    yield driver  # 테스트 실행 후 정리
+    driver.quit()
+
+@pytest.fixture(scope="module")
+def driver_module():
+    """모듈 전체에서 한 번만 실행되는 Fixture"""
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.fixture(scope="session")
+def driver_session():
+    """모든 테스트에서 한 번만 실행되는 Fixture"""
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+# 사용 예제
+def test_example(driver):
+    """driver fixture 사용"""
+    driver.get("https://www.google.com")
+    assert "Google" in driver.title</code></pre>
+                    </div>
+
+                    <h3>4. Fixture 사용 예제</h3>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>test_with_fixture.py</span>
+                            <button class="copy-btn" data-code="pytest-fixture-example">복사</button>
+                        </div>
+                        <pre><code id="pytest-fixture-example">import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+@pytest.fixture
+def driver():
+    """브라우저 드라이버"""
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(10)
+    yield driver
+    driver.quit()
+
+def test_google_search(driver):
+    """구글 검색 테스트"""
+    driver.get("https://www.google.com")
+    search_box = driver.find_element(By.NAME, "q")
+    search_box.send_keys("Pytest Selenium")
+    search_box.submit()
+    
+    # 검색 결과 확인
+    results = driver.find_elements(By.CSS_SELECTOR, "h3")
+    assert len(results) > 0
+
+def test_google_logo(driver):
+    """구글 로고 테스트"""
+    driver.get("https://www.google.com")
+    logo = driver.find_element(By.ID, "logo")
+    assert logo.is_displayed()</code></pre>
+                    </div>
+
+                    <h3>5. 파라미터화된 테스트</h3>
+                    <p>같은 테스트를 여러 데이터로 실행할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>파라미터화된 테스트</span>
+                            <button class="copy-btn" data-code="pytest-parametrize">복사</button>
+                        </div>
+                        <pre><code id="pytest-parametrize">import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.mark.parametrize("search_term", [
+    "Python",
+    "Selenium",
+    "Pytest",
+    "자동화 테스트"
+])
+def test_google_search_multiple(driver, search_term):
+    """여러 검색어로 테스트"""
+    driver.get("https://www.google.com")
+    search_box = driver.find_element(By.NAME, "q")
+    search_box.send_keys(search_term)
+    search_box.submit()
+    
+    # 검색어가 결과에 포함되어 있는지 확인
+    assert search_term in driver.page_source or search_term in driver.title
+
+@pytest.mark.parametrize("url,expected_title", [
+    ("https://www.google.com", "Google"),
+    ("https://www.github.com", "GitHub"),
+    ("https://www.python.org", "Python"),
+])
+def test_page_titles(driver, url, expected_title):
+    """여러 페이지의 제목 테스트"""
+    driver.get(url)
+    assert expected_title in driver.title</code></pre>
+                    </div>
+
+                    <h3>6. 테스트 마커 (Markers)</h3>
+                    <p>테스트를 그룹화하고 선택적으로 실행할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>테스트 마커 사용</span>
+                            <button class="copy-btn" data-code="pytest-markers">복사</button>
+                        </div>
+                        <pre><code id="pytest-markers">import pytest
+from selenium import webdriver
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.mark.smoke
+def test_login(driver):
+    """스모크 테스트"""
+    driver.get("https://example.com/login")
+    # 로그인 테스트...
+
+@pytest.mark.regression
+def test_checkout(driver):
+    """회귀 테스트"""
+    driver.get("https://example.com/checkout")
+    # 체크아웃 테스트...
+
+@pytest.mark.slow
+def test_heavy_test(driver):
+    """느린 테스트"""
+    # 시간이 오래 걸리는 테스트...
+    pass
+
+# pytest.ini 파일에 마커 등록 필요
+# [pytest]
+# markers =
+#     smoke: smoke tests
+#     regression: regression tests
+#     slow: slow running tests</code></pre>
+                    </div>
+
+                    <h3>7. 테스트 실행</h3>
+                    <p>Pytest를 실행하는 다양한 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>테스트 실행 명령어</span>
+                            <button class="copy-btn" data-code="pytest-run">복사</button>
+                        </div>
+                        <pre><code id="pytest-run"># 모든 테스트 실행
+pytest
+
+# 특정 파일 실행
+pytest test_google.py
+
+# 특정 테스트 함수 실행
+pytest test_google.py::test_google_search
+
+# 마커로 필터링
+pytest -m smoke
+pytest -m "smoke or regression"
+
+# 상세 출력
+pytest -v
+
+# 매우 상세한 출력
+pytest -vv
+
+# 실패한 테스트만 재실행
+pytest --lf
+
+# HTML 리포트 생성
+pytest --html=report.html
+
+# 병렬 실행 (pytest-xdist 필요)
+pytest -n 4  # 4개 프로세스로 실행
+
+# 출력 캡처 안 함
+pytest -s
+
+# 특정 키워드 포함 테스트만 실행
+pytest -k "search"</code></pre>
+                    </div>
+
+                    <h3>8. Assertion과 예외 처리</h3>
+                    <p>Pytest의 강력한 assertion 기능을 사용합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Assertion 예제</span>
+                            <button class="copy-btn" data-code="pytest-assertions">복사</button>
+                        </div>
+                        <pre><code id="pytest-assertions">import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+def test_assertions(driver):
+    """다양한 Assertion 예제"""
+    driver.get("https://www.google.com")
+    
+    # 기본 Assertion
+    assert "Google" in driver.title
+    assert driver.current_url == "https://www.google.com/"
+    
+    # 요소 존재 확인
+    logo = driver.find_element(By.ID, "logo")
+    assert logo.is_displayed()
+    
+    # 텍스트 확인
+    assert "Google" in driver.page_source
+    
+    # 예외 발생 기대
+    with pytest.raises(Exception):
+        driver.find_element(By.ID, "nonexistent")
+    
+    # 커스텀 메시지
+    assert len(driver.find_elements(By.TAG_NAME, "a")) > 0, "링크가 없습니다!"
+
+def test_comparison(driver):
+    """비교 Assertion"""
+    driver.get("https://example.com")
+    
+    # 숫자 비교
+    links_count = len(driver.find_elements(By.TAG_NAME, "a"))
+    assert links_count > 10
+    assert links_count >= 10
+    assert links_count < 100
+    
+    # 리스트 확인
+    buttons = driver.find_elements(By.TAG_NAME, "button")
+    assert len(buttons) != 0
+    assert "Submit" in [btn.text for btn in buttons]</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pytest 전문가 탭 -->
+            <section id="pytest-advanced" class="tab-content">
+                <h2>🏆 Pytest 전문가 과정</h2>
+                <div class="content-box">
+                    <h3>고급 Pytest 기법</h3>
+                    <p>전문가 수준의 Pytest 사용법을 배워봅시다.</p>
+
+                    <h3>1. Fixture 고급 활용</h3>
+                    <p>더 복잡한 Fixture 패턴을 사용합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>고급 Fixture 패턴</span>
+                            <button class="copy-btn" data-code="pytest-advanced-fixture">복사</button>
+                        </div>
+                        <pre><code id="pytest-advanced-fixture">import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+# Fixture에 파라미터 전달
+@pytest.fixture(params=["chrome", "firefox"])
+def driver(request):
+    """여러 브라우저로 테스트"""
+    if request.param == "chrome":
+        driver = webdriver.Chrome()
+    elif request.param == "firefox":
+        options = FirefoxOptions()
+        driver = webdriver.Firefox(options=options)
+    
+    yield driver
+    driver.quit()
+
+# Fixture 체이닝
+@pytest.fixture
+def base_url():
+    """기본 URL"""
+    return "https://example.com"
+
+@pytest.fixture
+def driver_with_url(driver, base_url):
+    """URL이 설정된 드라이버"""
+    driver.get(base_url)
+    return driver
+
+# Autouse Fixture
+@pytest.fixture(autouse=True)
+def setup_teardown():
+    """모든 테스트 전후에 자동 실행"""
+    print("테스트 시작")
+    yield
+    print("테스트 종료")
+
+# Fixture 스코프
+@pytest.fixture(scope="function")  # 각 테스트마다 (기본값)
+def driver_function():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.fixture(scope="class")  # 클래스당 한 번
+def driver_class():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.fixture(scope="module")  # 모듈당 한 번
+def driver_module():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.fixture(scope="session")  # 모든 테스트에서 한 번
+def driver_session():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+# Fixture 의존성
+@pytest.fixture
+def user(driver):
+    """로그인된 사용자"""
+    driver.get("https://example.com/login")
+    # 로그인 로직...
+    return {"username": "testuser", "driver": driver}
+
+@pytest.fixture
+def admin_user(user):
+    """관리자 사용자"""
+    # user를 기반으로 관리자 권한 추가...
+    return user</code></pre>
+                    </div>
+
+                    <h3>2. Hook 함수 사용</h3>
+                    <p>테스트 실행 전후에 코드를 실행할 수 있습니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>conftest.py - Hook 함수</span>
+                            <button class="copy-btn" data-code="pytest-hooks">복사</button>
+                        </div>
+                        <pre><code id="pytest-hooks">import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from datetime import datetime
+import os
+
+# 테스트 시작 전
+def pytest_configure(config):
+    """Pytest 설정"""
+    config.option.htmlpath = f"reports/report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
+
+# 테스트 실행 전
+def pytest_runtest_setup(item):
+    """각 테스트 실행 전"""
+    print(f"\n테스트 시작: {item.name}")
+
+# 테스트 실행 후
+def pytest_runtest_teardown(item, nextitem):
+    """각 테스트 실행 후"""
+    print(f"테스트 종료: {item.name}")
+
+# 테스트 실패 시
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """테스트 결과 보고"""
+    outcome = yield
+    rep = outcome.get_result()
+    
+    if rep.when == "call" and rep.failed:
+        # 실패한 테스트의 스크린샷 저장
+        if "driver" in item.funcargs:
+            driver = item.funcargs["driver"]
+            screenshot_dir = "screenshots"
+            os.makedirs(screenshot_dir, exist_ok=True)
+            screenshot_path = os.path.join(
+                screenshot_dir, 
+                f"{item.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+            )
+            driver.save_screenshot(screenshot_path)
+            print(f"스크린샷 저장: {screenshot_path}")
+
+# 테스트 수집 후
+def pytest_collection_modifyitems(config, items):
+    """테스트 수집 후 수정"""
+    for item in items:
+        # 느린 테스트에 마커 추가
+        if "slow" in item.name:
+            item.add_marker(pytest.mark.slow)
+
+# 커스텀 마커 등록
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "smoke: smoke tests"
+    )
+    config.addinivalue_line(
+        "markers", "regression: regression tests"
+    )</code></pre>
+                    </div>
+
+                    <h3>3. 플러그인 사용</h3>
+                    <p>유용한 Pytest 플러그인들을 활용합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>유용한 플러그인</span>
+                            <button class="copy-btn" data-code="pytest-plugins">복사</button>
+                        </div>
+                        <pre><code id="pytest-plugins"># requirements.txt
+pytest
+pytest-html          # HTML 리포트
+pytest-selenium      # Selenium 통합
+pytest-xdist         # 병렬 실행
+pytest-timeout       # 타임아웃 설정
+pytest-rerunfailures # 실패 재시도
+pytest-cov           # 커버리지
+pytest-mock          # Mock 객체
+pytest-allure-adaptor # Allure 리포트
+
+# 설치
+pip install -r requirements.txt
+
+# pytest.ini 설정
+[pytest]
+markers =
+    smoke: smoke tests
+    regression: regression tests
+    slow: slow tests
+addopts = 
+    --html=report.html
+    --self-contained-html
+    --reruns=2
+    --reruns-delay=1
+    --timeout=300
+testpaths = tests
+python_files = test_*.py
+python_classes = Test*
+python_functions = test_*</code></pre>
+                    </div>
+
+                    <h3>4. Page Object Model과 Pytest 통합</h3>
+                    <p>POM 패턴을 Pytest와 함께 사용합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>POM + Pytest 통합</span>
+                            <button class="copy-btn" data-code="pytest-pom">복사</button>
+                        </div>
+                        <pre><code id="pytest-pom"># pages/login_page.py
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class LoginPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+        
+        self.username_field = (By.ID, "username")
+        self.password_field = (By.ID, "password")
+        self.login_button = (By.CSS_SELECTOR, "button[type='submit']")
+    
+    def login(self, username, password):
+        self.driver.find_element(*self.username_field).send_keys(username)
+        self.driver.find_element(*self.password_field).send_keys(password)
+        self.driver.find_element(*self.login_button).click()
+        return DashboardPage(self.driver)
+
+# pages/dashboard_page.py
+class DashboardPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.welcome_message = (By.CLASS_NAME, "welcome")
+    
+    def get_welcome_message(self):
+        return self.driver.find_element(*self.welcome_message).text
+
+# conftest.py
+import pytest
+from selenium import webdriver
+from pages.login_page import LoginPage
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@pytest.fixture
+def login_page(driver):
+    driver.get("https://example.com/login")
+    return LoginPage(driver)
+
+# tests/test_login.py
+import pytest
+from pages.login_page import LoginPage
+
+def test_login_success(login_page):
+    """로그인 성공 테스트"""
+    dashboard = login_page.login("user123", "password123")
+    assert "환영합니다" in dashboard.get_welcome_message()
+
+def test_login_failure(login_page):
+    """로그인 실패 테스트"""
+    login_page.login("wrong", "wrong")
+    # 에러 메시지 확인...</code></pre>
+                    </div>
+
+                    <h3>5. 데이터 드리븐 테스트</h3>
+                    <p>외부 파일에서 테스트 데이터를 읽어 사용합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>데이터 드리븐 테스트</span>
+                            <button class="copy-btn" data-code="pytest-data-driven">복사</button>
+                        </div>
+                        <pre><code id="pytest-data-driven">import pytest
+import json
+import csv
+from selenium import webdriver
+
+# JSON 파일에서 데이터 읽기
+@pytest.fixture
+def test_data():
+    with open('test_data.json', 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def test_with_json_data(driver, test_data):
+    """JSON 데이터로 테스트"""
+    for user in test_data['users']:
+        driver.get("https://example.com/login")
+        # user['username'], user['password'] 사용...
+
+# CSV 파일에서 데이터 읽기
+def get_csv_data():
+    """CSV 파일에서 테스트 데이터 읽기"""
+    with open('test_data.csv', 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        return list(reader)
+
+@pytest.mark.parametrize("user_data", get_csv_data())
+def test_with_csv_data(driver, user_data):
+    """CSV 데이터로 테스트"""
+    driver.get("https://example.com/login")
+    # user_data['username'], user_data['password'] 사용...
+
+# test_data.json 예제
+# {
+#   "users": [
+#     {"username": "user1", "password": "pass1"},
+#     {"username": "user2", "password": "pass2"}
+#   ]
+# }
+
+# test_data.csv 예제
+# username,password,expected_result
+# user1,pass1,success
+# user2,wrong,failure</code></pre>
+                    </div>
+
+                    <h3>6. 병렬 실행 및 최적화</h3>
+                    <p>테스트를 병렬로 실행하여 속도를 높입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>병렬 실행 설정</span>
+                            <button class="copy-btn" data-code="pytest-parallel">복사</button>
+                        </div>
+                        <pre><code id="pytest-parallel"># pytest-xdist 설치
+pip install pytest-xdist
+
+# 병렬 실행
+pytest -n 4  # 4개 프로세스로 실행
+pytest -n auto  # CPU 코어 수만큼 자동
+
+# 그룹별 실행
+pytest -n 4 --dist=loadgroup  # 같은 그룹은 같은 프로세스에서
+
+# conftest.py에서 병렬 실행 설정
+import pytest
+
+@pytest.fixture(scope="session")
+def driver_session():
+    """세션 전체에서 한 번만 실행"""
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+# pytest.ini
+[pytest]
+addopts = -n auto  # 기본적으로 병렬 실행</code></pre>
+                    </div>
+
+                    <h3>7. Allure 리포트 생성</h3>
+                    <p>아름답고 상세한 테스트 리포트를 생성합니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>Allure 리포트</span>
+                            <button class="copy-btn" data-code="pytest-allure">복사</button>
+                        </div>
+                        <pre><code id="pytest-allure"># 설치
+pip install pytest-allure-adaptor
+# 또는
+pip install allure-pytest
+
+# 테스트 작성
+import pytest
+import allure
+from selenium import webdriver
+
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
+
+@allure.feature("로그인")
+@allure.story("사용자 로그인")
+def test_login(driver):
+    """로그인 테스트"""
+    from selenium.webdriver.common.by import By
+    
+    with allure.step("로그인 페이지 열기"):
+        driver.get("https://example.com/login")
+    
+    with allure.step("사용자명 입력"):
+        driver.find_element(By.ID, "username").send_keys("user123")
+    
+    with allure.step("비밀번호 입력"):
+        driver.find_element(By.ID, "password").send_keys("password123")
+    
+    with allure.step("로그인 버튼 클릭"):
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    
+    with allure.step("로그인 성공 확인"):
+        assert "대시보드" in driver.title
+
+# 실행
+pytest --alluredir=allure-results
+
+# 리포트 보기
+allure serve allure-results</code></pre>
+                    </div>
+
+                    <h3>8. CI/CD 통합</h3>
+                    <p>GitHub Actions, Jenkins 등에 통합하는 방법입니다.</p>
+                    
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span>GitHub Actions 예제</span>
+                            <button class="copy-btn" data-code="pytest-cicd">복사</button>
+                        </div>
+                        <pre><code id="pytest-cicd"># .github/workflows/test.yml
+name: Selenium Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser chromium-chromedriver
+    
+    - name: Run tests
+      run: |
+        pytest --html=report.html --self-contained-html
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: test-results
+        path: report.html</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 팁 & 트러블슈팅 탭 -->
+            <section id="tips" class="tab-content">
+                <h2>💡 팁 & 트러블슈팅</h2>
+                <div class="content-box">
+                    <h3>자주 마주치는 문제들</h3>
+                    
+                    <div class="tip-card">
+                        <h4>❌ 문제 1: 요소를 찾을 수 없음 (NoSuchElementException)</h4>
+                        <p><strong>원인:</strong> 페이지가 완전히 로드되기 전에 요소를 찾으려고 시도했거나, 요소의 위치가 잘못되었습니다.</p>
+                        <p><strong>해결 방법:</strong></p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>해결 코드</span>
+                                <button class="copy-btn" data-code="tip1">복사</button>
+                            </div>
+                            <pre><code id="tip1"># ❌ 나쁜 예: 즉시 요소 찾기
+element = driver.find_element(By.ID, "my-element")
+
+# ✅ 좋은 예: 명시적 대기 사용
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+wait = WebDriverWait(driver, 10)
+element = wait.until(EC.presence_of_element_located((By.ID, "my-element")))</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>❌ 문제 2: 클릭이 작동하지 않음</h4>
+                        <p><strong>원인:</strong> 요소가 아직 클릭 가능한 상태가 아니거나, 다른 요소에 가려져 있습니다.</p>
+                        <p><strong>해결 방법:</strong></p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>해결 코드</span>
+                                <button class="copy-btn" data-code="tip2">복사</button>
+                            </div>
+                            <pre><code id="tip2"># ✅ 요소가 클릭 가능할 때까지 대기
+wait = WebDriverWait(driver, 10)
+button = wait.until(EC.element_to_be_clickable((By.ID, "my-button")))
+button.click()
+
+# 또는 JavaScript로 클릭 (마지막 수단)
+button = driver.find_element(By.ID, "my-button")
+driver.execute_script("arguments[0].click();", button)</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>❌ 문제 3: 브라우저가 너무 빨리 닫힘</h4>
+                        <p><strong>원인:</strong> 스크립트가 너무 빨리 실행되어 결과를 볼 시간이 없습니다.</p>
+                        <p><strong>해결 방법:</strong></p>
+                        <div class="code-block-wrapper">
+                            <div class="code-header">
+                                <span>해결 코드</span>
+                                <button class="copy-btn" data-code="tip3">복사</button>
+                            </div>
+                            <pre><code id="tip3"># ✅ 마지막에 입력 대기 또는 시간 지연
+import time
+
+# ... 작업 수행 ...
+
+# 사용자 입력 대기 (Enter 키 누를 때까지)
+input("작업이 완료되었습니다. Enter 키를 눌러 브라우저를 닫으세요...")
+driver.quit()
+
+# 또는 일정 시간 대기
+time.sleep(5)  # 5초 대기
+driver.quit()</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>베스트 프랙티스</h3>
+                    
+                    <div class="best-practice">
+                        <h4>✅ 1. 항상 try-finally 사용</h4>
+                        <p>예외가 발생해도 브라우저가 확실히 닫히도록 합니다.</p>
+                    </div>
+
+                    <div class="best-practice">
+                        <h4>✅ 2. 명시적 대기 사용</h4>
+                        <p><code>time.sleep()</code> 대신 <code>WebDriverWait</code>를 사용하면 더 안정적이고 빠릅니다.</p>
+                    </div>
+
+                    <div class="best-practice">
+                        <h4>✅ 3. 적절한 Locator 선택</h4>
+                        <p>ID > CSS Selector > XPath 순으로 우선순위를 두세요. ID가 가장 빠르고 안정적입니다.</p>
+                    </div>
+
+                    <div class="best-practice">
+                        <h4>✅ 4. 페이지 객체 모델 (POM) 패턴 사용</h4>
+                        <p>큰 프로젝트에서는 각 페이지를 클래스로 만들어 관리하면 유지보수가 쉬워집니다.</p>
+                    </div>
+
+                    <h3>유용한 리소스</h3>
+                    <ul>
+                        <li><a href="https://www.selenium.dev/documentation/" target="_blank">Selenium 공식 문서</a></li>
+                        <li><a href="https://selenium-python.readthedocs.io/" target="_blank">Selenium Python 문서</a></li>
+                        <li><a href="https://www.python.org/about/gettingstarted/" target="_blank">Python 시작하기</a></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2025 자동화 테스트 가이드 | Python & Selenium으로 만든 웹 자동화 가이드</p>
+            <p class="footer-note">이 가이드는 비전공자와 초보자를 위해 제작되었습니다. 🚀</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
